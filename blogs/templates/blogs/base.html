@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	<!--css -->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.2.4/dist/css/uikit.min.css" />
+	<!-- UIkit JS -->
+	<script src="https://cdn.jsdelivr.net/npm/uikit@3.2.4/dist/js/uikit.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/uikit@3.2.4/dist/js/uikit-icons.min.js"></script>
+	<!-- end css -->
+		{% if title %}
+		<title>Blogging Network - {{title}}</title>
+		{% else %}
+		<title>Blogging Network</title>
+		{% endif %}
+	</head>
+	<body>
+		<nav class="uk-navbar-container uk-dark" uk-navbar>
+			<div class="uk-navbar-center">
+				<ul class="uk-navbar-nav">
+					<li class="{{ blog_home }}"><a href="{% url 'blog_home' %}">Home</a></li>
+					<li class="{{ blog_about }}"><a href="{% url 'blog_about' %}">About</a></li>
+				</ul>
+			</div>
+		</nav>
+		<div class="uk-container">
+			{% block content %}{% endblock %}
+		</div>
+	</body>
+</html>
