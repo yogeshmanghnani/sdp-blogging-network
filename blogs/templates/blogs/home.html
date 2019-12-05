@@ -6,7 +6,8 @@
 			<div class="uk-card uk-card-default uk-card-body">
 				<div class="uk-card-header">	
 					<h3 class="uk-card-title uk-margin-remove-bottom">{{post.title}}</h3>
-					<p class="uk-margin-remove-top">{{post.author}}</p>
+					<p class="uk-margin-remove-top uk-margin-remove-bottom">{{post.author}}</p>
+					<p class="uk-margin-remove-top">{{post.date_posted|date:"F d, Y"}}</p>
 				</div>
 				<p>{{post.content|truncatechars:140}}</p>
 			</div>
