@@ -1,0 +1,43 @@
+{% extends "blogs/base.html" %}
+{% load widget_tweaks %}
+{% block content %}
+<div class="uk-grid uk-grid-small uk-margin-top" uk-grid>
+	<div>
+		<div class="uk-card uk-card-default uk-card-body">
+			<form method="POST">
+				{% csrf_token %}
+				{% if form.field_errors %}
+				{{ form.non_field_errors }}
+				{% endif %}
+				<fieldset class="uk-fieldset">
+					<legend class="uk-legend">Sign Up ! </legend>
+					{% for field in form %}
+						<div class="uk-margin">
+							{% if field.errors %}
+								{% render_field field class="uk-input uk-form-danger" placeholder=field.label %} <br />
+								<ul class="uk-margin-remove">
+									{% for err in field.errors %}
+										<li class="uk-margin-remove uk-text-danger uk-text-small">{{err}}</li>
+									{% endfor %}
+								</ul>
+							{% else %}
+								{% render_field field class="uk-input" placeholder=field.label %} <br />
+							{% endif %}
+							{% if field.help_text %}
+								<div class="uk-margin-remove uk-text-small uk-text-muted">{{field.help_text}}</div>
+							{% endif %}
+						</div>
+					{% endfor %}
+				</fieldset>
+				<button class="uk-button uk-button-primary" type="submit">Sign Up</button>
+		
+			</form>
+		</div>
+	</div>
+	<div>
+		<div class="uk-card uk-card-default uk-card-body">	
+			Already have an account? <a href="#">Login</a>
+		</div>
+	</div>
+</div>
+{% endblock content %}

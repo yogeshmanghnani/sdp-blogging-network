@@ -3,13 +3,17 @@
 	<div class="uk-child-width-1-2@s uk-child-width-1-3@m uk-grid-small uk-margin-top" uk-grid>
 		{% for post in posts %}
 		<div>
-			<div class="uk-card uk-card-default uk-card-body">
-				<div class="uk-card-header">	
+			<div class="uk-card uk-card-hover uk-card-default">
+				<div class="uk-card-header">
 					<h3 class="uk-card-title uk-margin-remove-bottom">{{post.title}}</h3>
-					<p class="uk-margin-remove-top uk-margin-remove-bottom">{{post.author}}</p>
-					<p class="uk-margin-remove-top">{{post.date_posted|date:"F d, Y"}}</p>
+					<p class="uk-margin-remove-top">{{post.date_posted|date:'F d, Y'}}
 				</div>
-				<p>{{post.content|truncatechars:140}}</p>
+				<div class="uk-card-body">
+					<p>{{post.content|truncatechars:140}}</p>
+				</div>
+				<div class="uk-card-footer uk-padding-small">
+					<p class="uk-text-small uk-text-muted uk-margin-left">{{post.author}}</p>
+				</div>
 			</div>
 		</div>
 		{% endfor %}
