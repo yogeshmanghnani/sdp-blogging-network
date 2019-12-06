@@ -1,0 +1,10 @@
+{% extends "blogs/base.html" %}
+{% block content %}
+<div class="uk-card uk-card-default uk-card-body uk-align-center uk-width-1-3@m uk-margin-top">
+	<h3 class="uk-card-title">You have been logged out</h3>
+	<p>
+		You are now logged out. <br />
+		You can login <a href="{% url 'login' %}">here</a>
+	</p>
+</div>
+{% endblock content %}

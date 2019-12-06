@@ -122,6 +122,8 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+LOGIN_REDIRECT_URL = 'blog_home'
+
 try:
     from local_settings import *
 except ImportError:
