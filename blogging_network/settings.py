@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [	
+	'django_cleanup.apps.CleanupConfig',
 	'blogs.apps.BlogsConfig',
 	'users.apps.UsersConfig',
     'django.contrib.admin',
@@ -127,6 +128,7 @@ LOGIN_URL = 'login'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
+AUTH_USER_MODEL = 'users.User'
  
 try:
     from local_settings import *
