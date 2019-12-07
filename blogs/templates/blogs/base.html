@@ -14,22 +14,36 @@
 		{% endif %}
 	</head>
 	<body>
-		<nav class="uk-navbar-container uk-dark" uk-navbar>
-			<div class="uk-navbar-center">
-				<ul class="uk-navbar-nav">
-					<li class="{{ blog_home }}"><a href="{% url 'blog_home' %}">Home</a></li>
-					<li class="{{ blog_about }}"><a href="{% url 'blog_about' %}">About</a></li>
-				</ul>
+		<nav class="uk-navbar-container">
+			<div class="uk-container">
+				<div class="uk-navbar">
+					<div class="uk-navbar-left">
+						<ul class="uk-navbar-nav">
+							<li class="{{ blog_home }}"><a href="{% url 'blog_home' %}">Home</a></li>
+							<li class="{{ blog_about }}"><a href="{% url 'blog_about' %}">About</a></li>
+						</ul>
+					</div>
+					<div class="uk-navbar-right">
+						<ul class="uk-navbar-nav">
+							{% if user.is_authenticated %}
+							<li><a href="{% url 'profile' %}">Profile</a></li>
+							<li><a href="{% url 'logout' %}">Logout</a></li>
+							{% else %}
+							<li><a href="{% url 'login' %}">Login</a></li>
+							<li><a href="{% url 'register' %}">Register</a></li>
+							{% endif %}
+						</ul>
+					</div>
+				</div>
 			</div>
 		</nav>
 		<div class="uk-container uk-text-break">
 			{% if messages %}
 				{% for message in messages %}
-				<div class="uk-alert-success" uk-alert>
-					<a class="uk-alert-close" uk-close></a>
-					<p>{{message}}</p>
-				</div>
-
+					<div class="uk-alert-success" uk-alert>
+						<a class="uk-alert-close" uk-close></a>
+						<p>{{message}}</p>
+					</div>
 				{% endfor %}
 			{% endif %}
 			{% block content %}{% endblock %}

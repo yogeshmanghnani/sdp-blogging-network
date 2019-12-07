@@ -4,3 +4,4 @@ local_settings.py
 *.pyc
 *__pycache__/
 *.swp
+media/

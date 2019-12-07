@@ -2,11 +2,16 @@
 {% load widget_tweaks %}
 {% block content %}
 <div class="uk-width-1-2@m uk-align-right@m">
-	<div class="uk-card uk-card-default uk-card-body uk-margin uk-margin-top">
+	<div class="uk-card uk-card-default uk-card-body uk-margin uk-margin-top uk-card-hover">
 		<form method="POST">
 			{% csrf_token %}
 			{% if form.non_field_errors %}
-			{{ form.non_field_errors }}
+				{% for err in form.non_field_errors %}
+					<div class="uk-alert-danger">
+						{{ err }}
+					</div>
+				{% endfor %}
+				<div class="uk-margin-top"> </div>
 			{% endif %}
 			<fieldset class="uk-fieldset">
 				<legend class="uk-legend">Login ! </legend>
@@ -32,7 +37,7 @@
 	
 		</form>
 	</div>
-	<div class="uk-card uk-card-default uk-card-body">	
+	<div class="uk-card uk-card-default uk-card-body uk-card-hover">	
 		Don't have an account? <a href="{% url 'register' %}">Sign Up</a>
 	</div>
 </div>
