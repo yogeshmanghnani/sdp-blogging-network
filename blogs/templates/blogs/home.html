@@ -12,7 +12,14 @@
 					<p>{{post.content|truncatechars:140}}</p>
 				</div>
 				<div class="uk-card-footer uk-padding-small">
-					<p class="uk-text-small uk-text-muted uk-margin-left">{{post.author}}</p>
+					<div class="uk-grid-small" uk-grid>
+						<div class="uk-width-auto">
+							<img class="uk-border-circle" width="30" height="30" src="{{ post.author.profile.image.url }}" /> 
+						</div>
+						<div class="uk-width-expand">
+							<p class="uk-text-small uk-text-muted">{{post.author}}</p>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
