@@ -1,5 +1,7 @@
 from django.shortcuts import render
 from .models import Blog_Post
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 # Create your views here.
 
 def home(request):
@@ -9,12 +11,73 @@ def home(request):
 			'title' : "Blog Posts",
 			'blog_home': 'uk-active'
 			}
-
 	return render(request, 'blogs/home.html', context)
+
+
+
+class PostListView(ListView):
+	model = Blog_Post
+	template_name = "blogs/home.html"
+	context_object_name = "posts"
+	ordering = ['-date_posted']
+
+	def get_context_data(self, **kwargs):
+		context = super().get_context_data(**kwargs)
+		context['title'] = "Blog Posts"
+		context['blog_home'] = 'uk-active'
+		return context
+
+
+class PostDetailView(DetailView):
+	model = Blog_Post
+
+	
+class PostCreateView(LoginRequiredMixin, CreateView):
+	model = Blog_Post
+	fields = ['title', 'content']
+
+	def get_context_data(self, **kwargs):
+		context = super().get_context_data(**kwargs)
+		context['title'] = "Create New Post"
+		context['post_create'] = 'uk-active'
+		return context
+
+	def form_valid(self, form):
+		form.instance.author = self.request.user
+		return super().form_valid(form)
+
+
+class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+	model = Blog_Post
+	fields = ['title', 'content']
+
+	def form_valid(self, form):
+		form.instance.author = self.request.user
+		return super().form_valid(form)
+
+	def test_func(self):
+		return self.get_object().author == self.request.user
+
+	def get_context_data(self, **kwargs):
+		context = super().get_context_data(**kwargs)
+		context['title'] = "Update your post"
+		context['post_create'] = 'uk-active'
+		return context
+
+
+class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+	model = Blog_Post
+	success_url = '/'
+
+	def test_func(self):
+		return self.get_object().author == self.request.user
 
 
 def about(request):
 	context = {
-			'blog_about': 'uk-active'
+			'blog_about': 'uk-active',
+			'title': 'About'
 			}
 	return render(request, 'blogs/about.html', context)
+
+

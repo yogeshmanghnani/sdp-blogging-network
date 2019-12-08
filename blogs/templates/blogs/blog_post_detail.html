@@ -1,0 +1,30 @@
+{% extends "blogs/base.html" %}
+{% block content %}
+<div>
+	<div class="uk-card uk-card-hover uk-card-default uk-width-2-3@m uk-align-center">
+		<div class="uk-card-header">
+			<h3 class="uk-card-title uk-margin-remove-bottom">{{object.title}}</h3>
+			<p class="uk-margin-remove-top">{{object.date_posted|date:'F d, Y'}}
+		</div>
+		<div class="uk-card-body">
+			<p>{{object.content}}</p>
+		</div>
+		<div class="uk-card-footer uk-padding-small">
+			<div class="uk-grid-small" uk-grid>
+				<div class="uk-width-auto">
+					<img class="uk-border-circle" width="30" height="30" src="{{ object.author.profile.image.url }}" /> 
+				</div>
+				<div class="uk-width-expand">
+					<p class="uk-text-small uk-text-muted">{{object.author}}</p>
+				</div>
+				{% if object.author == user %}
+				<div class="uk-width-auto">
+					<a href="{% url 'post_update' object.id %}" uk-icon="icon: pencil; ratio: 1.2"></a>
+					<a href="{% url 'post_delete' object.id %}" uk-icon="icon: trash; ratio: 1.2" class="uk-text-danger uk-margin-medium-left"></a>
+				</div>
+				{% endif %}
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock content %}

@@ -1,0 +1,18 @@
+{% extends "blogs/base.html" %}
+{% load widget_tweaks %}
+{% block content %}
+<div class="uk-width-1-2@m uk-align-center">
+	<div class="uk-card uk-card-default uk-card-body uk-margin uk-margin-top uk-card-hover">
+		<form method="POST">
+			{% csrf_token %}
+			<fieldset class="uk-fieldset">
+				<legend class="uk-legend">Do you really want to delete the post ?</legend>
+				<h2 class="uk-margin-remove-bottom">Are you sure you want to delete the post ?</h2>
+				<h2 class="uk-margin-remove-top">"{{object.title}}"</h2>
+			</fieldset>
+			<button class="uk-button uk-button-danger" type="submit">Yes, delete</button>	
+			<a class="uk-button uk-button-secondary" href="{% url 'post_detail' object.id %}">Cancel</a>	
+		</form>
+	</div>
+</div>
+{% endblock content %}

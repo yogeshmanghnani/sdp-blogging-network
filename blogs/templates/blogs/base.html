@@ -19,15 +19,16 @@
 				<div class="uk-navbar">
 					<div class="uk-navbar-left">
 						<ul class="uk-navbar-nav">
-							<li class="{{ blog_home }}"><a href="{% url 'blog_home' %}">Home</a></li>
-							<li class="{{ blog_about }}"><a href="{% url 'blog_about' %}">About</a></li>
+							<li class="{{ blog_home }}"><a href="{% url 'blog_home' %}" uk-icon="icon: home; ratio: 1.5"></a></li>
+							<li class="{{ blog_about }}"><a href="{% url 'blog_about' %}" uk-icon="icon: info; ratio: 1.5"></a></li>
 						</ul>
 					</div>
 					<div class="uk-navbar-right">
 						<ul class="uk-navbar-nav">
 							{% if user.is_authenticated %}
-							<li><a href="{% url 'profile' %}">Profile</a></li>
-							<li><a href="{% url 'logout' %}">Logout</a></li>
+							<li class="{{ post_create }}"><a href="{% url 'post_create' %}" uk-icon="icon: file-edit; ratio: 1.5"></a></li>
+							<li class="{{ profile }}"><a href="{% url 'profile' %}" uk-icon="icon: user; ratio: 1.5"></a></li>
+							<li><a href="{% url 'logout' %}" uk-icon="icon: sign-out; ratio: 1.5"></a></li>
 							{% else %}
 							<li><a href="{% url 'login' %}">Login</a></li>
 							<li><a href="{% url 'register' %}">Register</a></li>
