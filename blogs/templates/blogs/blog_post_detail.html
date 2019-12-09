@@ -1,7 +1,7 @@
 {% extends "blogs/base.html" %}
 {% block content %}
 <div>
-	<div class="uk-card uk-card-hover uk-card-default uk-width-2-3@m uk-align-center">
+	<div class="uk-card uk-card-hover uk-card-default uk-width-3-4@m uk-align-center">
 		<div class="uk-card-header">
 			<h3 class="uk-card-title uk-margin-remove-bottom">{{object.title}}</h3>
 			<p class="uk-margin-remove-top">{{object.date_posted|date:'F d, Y'}}</p>
@@ -45,17 +45,28 @@
 			likereq.open('POST', "{% url 'post_like' object.id %}", true);
 			likereq.setRequestHeader("X-CSRFToken", getCookie("csrftoken"));
 			likereq.onload = function(){
-				var res = JSON.parse(likereq.response)
-				if(res.liked){
-					var btn = document.getElementById("like-button")
-					btn.classList.add(btn_class)
+				var p1 = likereq.responseURL.indexOf("/")
+				var p2 = likereq.responseURL.indexOf("/", p1+1)
+				var p3 = likereq.responseURL.indexOf("/", p2+1)
+				if(likereq.responseURL.slice(p3) == "{% url 'post_like' object.id %}"){
+					var res = JSON.parse(likereq.response)
+					if(res.liked){
+						var btn = document.getElementById("like-button")
+						btn.classList.add(btn_class)
+					} else {
+						var btn = document.getElementById("like-button")
+						btn.classList.remove(btn_class)
+					}
+					document.getElementById("numLike").innerHTML = res.numOfLikes
 				} else {
-					var btn = document.getElementById("like-button")
-					btn.classList.remove(btn_class)
+					var pl = likereq.responseURL.lastIndexOf("/")
+					window.location.replace(likereq.responseURL.slice(0, pl))
 				}
-				document.getElementById("numLike").innerHTML = res.numOfLikes
 			};
-			likereq.send("");
+			likereq.onerror = function(){
+				console.log(likereq.status)
+			};
+			likereq.send();
 		}
 	</script>
 {% endblock content %}
