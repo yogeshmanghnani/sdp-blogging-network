@@ -31,7 +31,7 @@
 							<li><a href="{% url 'logout' %}" uk-icon="icon: sign-out; ratio: 1.5"></a></li>
 							{% else %}
 							<li><a href="{% url 'login' %}">Login</a></li>
-							<li><a href="{% url 'register' %}">Register</a></li>
+							<li class="{{ register }}"><a href="{% url 'register' %}">Register</a></li>
 							{% endif %}
 						</ul>
 					</div>

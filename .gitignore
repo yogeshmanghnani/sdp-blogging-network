@@ -5,4 +5,6 @@ local_settings.py
 *__pycache__/
 *.swp
 media/
-*/migrations/
+**/migrations/**
+!**/migrations
+!**/migrations/__init__.py
