@@ -6,6 +6,7 @@ from django.urls import reverse
 
 class Blog_Post(models.Model):
 	title = models.CharField(max_length=64)
+	likes = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="liked_blogs")
 	content = models.TextField()
 	date_posted = models.DateTimeField(default = timezone.now)
 	author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)

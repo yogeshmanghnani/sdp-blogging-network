@@ -4,7 +4,7 @@
 	<div class="uk-card uk-card-hover uk-card-default uk-width-2-3@m uk-align-center">
 		<div class="uk-card-header">
 			<h3 class="uk-card-title uk-margin-remove-bottom">{{object.title}}</h3>
-			<p class="uk-margin-remove-top">{{object.date_posted|date:'F d, Y'}}
+			<p class="uk-margin-remove-top">{{object.date_posted|date:'F d, Y'}}</p>
 		</div>
 		<div class="uk-card-body">
 			<p>{{object.content}}</p>
@@ -17,14 +17,45 @@
 				<div class="uk-width-expand">
 					<p class="uk-text-small uk-text-muted">{{object.author}}</p>
 				</div>
-				{% if object.author == user %}
 				<div class="uk-width-auto">
-					<a href="{% url 'post_update' object.id %}" uk-icon="icon: pencil; ratio: 1.2"></a>
-					<a href="{% url 'post_delete' object.id %}" uk-icon="icon: trash; ratio: 1.2" class="uk-text-danger uk-margin-medium-left"></a>
+					<form class="uk-inline">
+						{% csrf_token %}
+						<button id="like-button" uk-icon="icon: heart; ratio: 1.2" onclick="like();return false;" class="uk-margin-small-right {{liked}}"></button><span id="numLike">{{ object.likes.count }}</span>
+					</form>
+					{% if object.author == user %}
+					<a href="{% url 'post_update' object.id %}" uk-icon="icon: pencil; ratio: 1.2" class="uk-margin-left"></a>
+					<a href="{% url 'post_delete' object.id %}" uk-icon="icon: trash; ratio: 1.2" class="uk-text-danger uk-margin-left"></a>
+					{% endif %}
 				</div>
-				{% endif %}
 			</div>
 		</div>
 	</div>
 </div>
+	<script type="text/javascript">
+
+		function getCookie(name) {
+	      var re = new RegExp(name + "=([^;]+)");
+	      var value = re.exec(document.cookie);
+	      return (value != null) ? unescape(value[1]) : null;
+	    }
+
+		function like(){
+			var likereq = new XMLHttpRequest();
+			var btn_class = "uk-text-danger"
+			likereq.open('POST', "{% url 'post_like' object.id %}", true);
+			likereq.setRequestHeader("X-CSRFToken", getCookie("csrftoken"));
+			likereq.onload = function(){
+				var res = JSON.parse(likereq.response)
+				if(res.liked){
+					var btn = document.getElementById("like-button")
+					btn.classList.add(btn_class)
+				} else {
+					var btn = document.getElementById("like-button")
+					btn.classList.remove(btn_class)
+				}
+				document.getElementById("numLike").innerHTML = res.numOfLikes
+			};
+			likereq.send("");
+		}
+	</script>
 {% endblock content %}

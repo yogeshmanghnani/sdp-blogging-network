@@ -2,6 +2,8 @@ from django.shortcuts import render
 from .models import Blog_Post
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.http import JsonResponse, Http404
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 
 def home(request):
@@ -30,6 +32,13 @@ class PostListView(ListView):
 
 class PostDetailView(DetailView):
 	model = Blog_Post
+
+	def get_context_data(self, **kwargs):
+		context = super().get_context_data(**kwargs)
+		context['title'] = self.object.title
+		if self.request.user in self.object.likes.all():
+			context['liked'] = "uk-text-danger"
+		return context
 
 	
 class PostCreateView(LoginRequiredMixin, CreateView):
@@ -81,3 +90,18 @@ def about(request):
 	return render(request, 'blogs/about.html', context)
 
 
+@login_required
+def like(request, pk):
+	if request.method == 'POST':
+		response = {}
+		blog = Blog_Post.objects.get(pk=pk)
+		if request.user in blog.likes.all():
+			blog.likes.remove(request.user)
+			response['liked'] = False
+		else:
+			blog.likes.add(request.user)
+			response['liked'] = True
+		response['numOfLikes'] = blog.likes.count()
+		return JsonResponse(response)
+	else:
+		raise Http404("Not Found")
