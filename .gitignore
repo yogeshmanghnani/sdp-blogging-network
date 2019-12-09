@@ -4,7 +4,11 @@ local_settings.py
 *.pyc
 *__pycache__/
 *.swp
-media/
+media/*
+media/profile_pictures/*
+!media
+!media/profile_pictures
+!media/profile_pictures/default.jpg
 **/migrations/**
 !**/migrations
 !**/migrations/__init__.py
