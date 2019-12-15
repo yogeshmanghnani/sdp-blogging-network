@@ -21,6 +21,9 @@
 							<li class="{{ blog_about }}"><a href="{% url 'blog_about' %}" uk-icon="icon: info; ratio: 1.5"></a></li>
 						</ul>
 					</div>
+					<div class="uk-navbar-center">
+						<a class="uk-navbar-item uk-logo" href="{% url 'blog_about' %}">Blogging Network</a>
+					</div>
 					<div class="uk-navbar-right">
 						<ul class="uk-navbar-nav">
 							{% if user.is_authenticated %}

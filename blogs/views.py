@@ -1,5 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from .models import Blog_Post
+from users.models import User
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.http import JsonResponse, Http404
@@ -18,6 +19,7 @@ def home(request):
 
 
 class PostListView(ListView):
+	paginate_by = 12
 	model = Blog_Post
 	template_name = "blogs/home.html"
 	context_object_name = "posts"
@@ -28,6 +30,23 @@ class PostListView(ListView):
 		context['title'] = "Blog Posts"
 		context['blog_home'] = 'uk-active'
 		return context
+
+
+class UserPostListView(ListView):
+	paginate_by = 12
+	model = Blog_Post
+	template_name = "blogs/user_posts.html"
+	context_object_name = "posts"
+
+	def get_context_data(self, **kwargs):
+		context = super().get_context_data(**kwargs)
+		context['title'] = "Blog Posts"
+		context['blog_home'] = 'uk-active'
+		return context
+
+	def get_query_set(self):
+		user = get_object_or_404(User, username=self.kwargs.get('username'))
+		return Blog_Post.objects.filter(author=user).order_by('-date_posted')
 
 
 class PostDetailView(DetailView):
