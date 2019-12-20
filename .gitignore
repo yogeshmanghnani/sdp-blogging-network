@@ -12,3 +12,4 @@ media/profile_pictures/*
 **/migrations/**
 !**/migrations
 !**/migrations/__init__.py
+static/*
