@@ -1,0 +1,24 @@
+<div>
+	<div class="uk-card uk-card-hover uk-card-default">
+		<div class="uk-card-header">
+			<h3 class="uk-card-title uk-margin-remove-bottom">{{post.title}}</h3>
+			<p class="uk-margin-remove-top">{{post.date_posted|date:'F d, Y'}}
+		</div>
+		<div class="uk-card-body">
+			<p>{{post.content|truncatechars:140}}</p>
+		</div>
+		<div class="uk-card-footer uk-padding-small">
+			<div class="uk-grid-small" uk-grid>
+				<div class="uk-width-auto">
+					<img class="uk-border-circle" width="30" height="30" src="{{ post.author.profile.image.url }}" /> 
+				</div>
+				<div class="uk-width-expand uk-flex-middle">
+					<a class="uk-text-small uk-text-muted" href="{% url 'user_posts' post.author.username %}">{{post.author}}</a>
+				</div>
+				<div class="uk-width-auto">
+					<a class="uk-text-small uk-link-muted" href="{% url 'post_detail' post.id %}">Read More</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
