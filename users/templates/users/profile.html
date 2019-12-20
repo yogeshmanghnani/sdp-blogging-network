@@ -54,18 +54,12 @@
 				<fieldset class="uk-fieldset">
 					{% for field in p_form %}
 						<div class="uk-margin">
-							{% if field.errors %}
-								{% render_field field class="uk-input uk-formform-danger" placeholder=field.label %} <br />
-								<ul class="uk-margin-remove">
-									{% for err in field.errors %}
-										<li class="uk-margin-remove uk-text-danger uk-text-small">{{err}}</li>
-									{% endfor %}
-								</ul>
+							{% if field.field.widget.input_type == "file" %}
+								{% render_field field id="upload_file" style="display:none"%}
+								<button class="uk-button" type="button" onclick="upload_file_func();"> Change Profile Picture </button>
+								<span class="uk-margin-left" id="select_file_name"></span>
 							{% else %}
 								{% render_field field class="uk-input" placeholder=field.label %} <br />
-							{% endif %}
-							{% if field.help_text %}
-								<div class="uk-margin-remove uk-text-small uk-text-muted">{{field.help_text}}</div>
 							{% endif %}
 						</div>
 					{% endfor %}
@@ -75,4 +69,14 @@
 		</div>
 	</div>
 </div>
+<script type="text/javascript">
+	var elem = document.getElementById("upload_file");
+	elem.onchange = function(){
+		document.getElementById("select_file_name").innerHTML = elem.files[0].name
+	}
+	function upload_file_func(){
+		var elem = document.getElementById("upload_file");
+		elem.click();
+	}
+</script>
 {% endblock content %}

@@ -4,12 +4,12 @@
 	<div class="uk-card-header">
 		<div class="uk-grid-small uk-flex-middle" uk-grid>
 			<div class="uk-width-auto">
-				<img class="uk-border-circle" width="80" height="80" src="{{ user.profile.image.url }}" /> 
+				<img class="uk-border-circle" width="80" height="80" src="{{ author.profile.image.url }}" /> 
 			</div>
 			<div class="uk-width-expand uk-margin-left">
-				<h3 class="uk-card-title uk-margin-remove-bottom">Posts by {{ user.username }}</h3>
-				<p class="uk-margin-remove-top uk-margin-remove-bottom">{{ user.email }}</p>
-				<p class="uk-margin-remove-top">{{user.username}} has made {{page_obj.paginator.count}} blog posts</p>
+				<h3 class="uk-card-title uk-margin-remove-bottom">Posts by {{ author.username }}</h3>
+				<p class="uk-margin-remove-top uk-margin-remove-bottom">{{ author.email }}</p>
+				<p class="uk-margin-remove-top">{{author.username}} has made {{page_obj.paginator.count}} blog posts</p>
 			</div>
 		</div>
 	</div>
@@ -30,8 +30,8 @@
 					<div class="uk-width-auto">
 						<img class="uk-border-circle" width="30" height="30" src="{{ post.author.profile.image.url }}" /> 
 					</div>
-					<div class="uk-width-expand">
-						<p class="uk-text-small uk-text-muted">{{post.author}}</p>
+					<div class="uk-width-expand uk-flex-middle">
+						<a class="uk-text-small uk-text-muted" href="{% url 'user_posts' post.author.username %}">{{post.author}}</a>
 					</div>
 					<div class="uk-width-auto">
 						<a class="uk-text-small uk-link-muted" href="{% url 'post_detail' post.id %}">Read More</a>

@@ -37,16 +37,18 @@ class UserPostListView(ListView):
 	model = Blog_Post
 	template_name = "blogs/user_posts.html"
 	context_object_name = "posts"
+	ordering = ['-date_posted']
 
 	def get_context_data(self, **kwargs):
+		author = get_object_or_404(User, username=self.kwargs.get('username'))
 		context = super().get_context_data(**kwargs)
 		context['title'] = "Blog Posts"
-		context['blog_home'] = 'uk-active'
+		context['author'] = author
 		return context
 
 	def get_query_set(self):
 		user = get_object_or_404(User, username=self.kwargs.get('username'))
-		return Blog_Post.objects.filter(author=user).order_by('-date_posted')
+		return Blog_Post.objects.filter(author=user)
 
 
 class PostDetailView(DetailView):

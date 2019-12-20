@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'widget_tweaks',
+	'django.forms',
 ]
 
 MIDDLEWARE = [
@@ -130,7 +131,8 @@ LOGIN_URL = 'login'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 AUTH_USER_MODEL = 'users.User'
- 
+FORM_RENDERER = 'django.forms.renderers.TemplatesSetting' 
+
 try:
     from local_settings import *
 except ImportError:

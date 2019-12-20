@@ -14,8 +14,8 @@
 				<div class="uk-width-auto">
 					<img class="uk-border-circle" width="30" height="30" src="{{ object.author.profile.image.url }}" /> 
 				</div>
-				<div class="uk-width-expand">
-					<p class="uk-text-small uk-text-muted">{{object.author}}</p>
+				<div class="uk-width-expand uk-flex-middle">
+					<a class="uk-text-small uk-text-muted" href="{% url 'user_posts' object.author.username %}">{{object.author}}</a>
 				</div>
 				<div class="uk-width-auto">
 					<form class="uk-inline">
