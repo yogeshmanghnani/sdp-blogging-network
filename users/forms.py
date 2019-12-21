@@ -19,11 +19,8 @@ class UserUpdateForm(forms.ModelForm):
 		model = get_user_model()
 		fields = ['username', 'email']
 
-class MyImageField(forms.widgets.ClearableFileInput):
-	template_name = "users/widgets/profile_button.html"
-
 class ProfileUpdateForm(forms.ModelForm):
-	image = forms.ImageField(widget=MyImageField())
+	image = forms.ImageField(label="Change Profile Picture")
 	class Meta:
 		model = Profile
 		fields = ['image']

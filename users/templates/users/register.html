@@ -1,37 +1,12 @@
 {% extends "blogs/base.html" %}
 {% load widget_tweaks %}
+{% load widget_filters %}
 {% block content %}
 <div class="uk-width-1-2@m uk-align-right@m">
 	<div class="uk-card uk-card-default uk-card-body uk-margin uk-margin-top uk-card-hover">
 		<form method="POST">
 			{% csrf_token %}
-			{% if form.non_field_errors %}
-				{% for err in form.non_field_errors %}
-					<div class="uk-alert-danger">
-						{{ err }}
-					</div>
-				{% endfor %}
-			{% endif %}
-			<fieldset class="uk-fieldset">
-				<legend class="uk-legend">Sign Up ! </legend>
-				{% for field in form %}
-					<div class="uk-margin">
-						{% if field.errors %}
-							{% render_field field class="uk-input uk-form-danger" placeholder=field.label %} <br />
-							<ul class="uk-margin-remove">
-								{% for err in field.errors %}
-									<li class="uk-margin-remove uk-text-danger uk-text-small">{{err}}</li>
-								{% endfor %}
-							</ul>
-						{% else %}
-							{% render_field field class="uk-input" placeholder=field.label %} <br />
-						{% endif %}
-						{% if field.help_text %}
-							<div class="uk-margin-remove uk-text-small uk-text-muted">{{field.help_text}}</div>
-						{% endif %}
-					</div>
-				{% endfor %}
-			</fieldset>
+			{% include 'uikit_form_formatter/form.html' with legend="Sign Up" form=form only %}
 			<button class="uk-button uk-button-primary" type="submit">Sign Up</button>	
 		</form>
 	</div>

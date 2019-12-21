@@ -30,7 +30,8 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
-INSTALLED_APPS = [	
+INSTALLED_APPS = [
+	'uikit_form_formatter.apps.UikitFormFormatterConfig',
 	'django_cleanup.apps.CleanupConfig',
 	'blogs.apps.BlogsConfig',
 	'users.apps.UsersConfig',

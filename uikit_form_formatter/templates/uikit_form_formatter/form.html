@@ -1,0 +1,26 @@
+{% load widget_tweaks %}
+{% load widget_filters %}
+{% if form.non_field_errors %}
+	{% for err in form.non_field_errors %}
+		<div class="uk-alert-danger uk-padding-small">
+			{{ err }}
+		</div>
+	{% endfor %}
+	<div class="uk-margin-top"> </div>
+{% endif %}
+<fieldset class="uk-fieldset">
+	{% if legend %}
+		<legend class="uk-legend">{{ legend }}</legend>
+	{% endif %}
+	{% for field in form %}
+		<div class="uk-margin">
+			{% if field|is_textinput or field|is_emailinput or field|is_password %}
+				{% include './textinput.html' with field=field only %}
+			{% elif field|is_clearable_file %}
+				{% include './file_upload_button.html' with field=field only %}
+			{% else %}
+				{{ field }}
+			{% endif %}
+		</div>
+	{% endfor %}
+</fieldset>

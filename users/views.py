@@ -5,6 +5,8 @@ from django.contrib.auth.decorators import login_required
 # Create your views here.
 
 def register(request):
+	if request.user.is_authenticated:
+		return redirect("blog_home")
 	if request.method == "POST":
 		form = UserRegisterForm(request.POST)
 		if form.is_valid():

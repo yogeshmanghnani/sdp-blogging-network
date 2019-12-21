@@ -1,0 +1,14 @@
+<input type="{{ field.field.widget.input_type }}" id="{{ field.id_for_label }}" name="{{ field.html_name }}" style="display:none" {% include "django/forms/widgets/attrs.html" with widget=field.field.widget only %}  />
+<button type="button" id="{{field.id_for_label}}_button" class="uk-button" onclick="upload_file('{{field.id_for_label}}')" >{{field.label}}</button>
+<span class="uk-text-small" id="{{field.id_for_label}}_label"></span>
+
+<script type="text/javascript">
+	var elem = document.getElementById("{{field.id_for_label}}");
+	elem.onchange = function(){
+		document.getElementById("{{field.id_for_label}}_label").innerHTML = elem.files[0].name
+	}
+	function upload_file(id){
+		var elem = document.getElementById(id);
+		elem.click();
+	}
+</script>
