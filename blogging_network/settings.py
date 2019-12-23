@@ -31,6 +31,9 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+	'ckeditor',
+	'ckeditor_uploader',
+	'django.forms',
 	'uikit_form_formatter.apps.UikitFormFormatterConfig',
 	'django_cleanup.apps.CleanupConfig',
 	'blogs.apps.BlogsConfig',
@@ -131,6 +134,12 @@ LOGIN_URL = 'login'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 AUTH_USER_MODEL = 'users.User'
+
+#CKEDITOR Settings
+CKEDITOR_UPLOAD_PATH = "blog_images/"
+CKEDITOR_ALLOW_NONIMAGE_FILES = False
+
+FORM_RENDERER = 'django.forms.renderers.TemplatesSetting'
 
 try:
     from local_settings import *

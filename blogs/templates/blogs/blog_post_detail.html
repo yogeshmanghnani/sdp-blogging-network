@@ -7,7 +7,7 @@
 			<p class="uk-margin-remove-top">{{object.date_posted|date:'F d, Y'}}</p>
 		</div>
 		<div class="uk-card-body">
-			<p>{{object.content}}</p>
+			<p>{{object.content | safe }}</p>
 		</div>
 		<div class="uk-card-footer uk-padding-small">
 			<div class="uk-grid-small" uk-grid>

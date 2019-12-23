@@ -2,12 +2,13 @@ from django.db import models
 from django.utils import timezone
 from django.conf import settings
 from django.urls import reverse
+from ckeditor_uploader.fields import RichTextUploadingField
 # Create your models here.
 
 class Blog_Post(models.Model):
 	title = models.CharField(max_length=64)
 	likes = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="liked_blogs")
-	content = models.TextField()
+	content = RichTextUploadingField()
 	date_posted = models.DateTimeField(default = timezone.now)
 	author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
