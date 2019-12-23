@@ -42,12 +42,13 @@ class UserPostListView(ListView):
 	def get_context_data(self, **kwargs):
 		author = get_object_or_404(User, username=self.kwargs.get('username'))
 		context = super().get_context_data(**kwargs)
-		context['title'] = "Blog Posts"
+		context['title'] = "Blog Posts by " + author.username
 		context['author'] = author
 		return context
 
-	def get_query_set(self):
+	def get_queryset(self):
 		user = get_object_or_404(User, username=self.kwargs.get('username'))
+		print(user)
 		return Blog_Post.objects.filter(author=user)
 
 
