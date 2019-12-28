@@ -1,0 +1,22 @@
+<li class="uk-margin-remove-top uk-margin-left uk-margin-right">
+	<article class="uk-comment uk-padding-small">
+		<header class="uk-comment-header uk-grid-medium uk-flex-middle uk-margin-bottom-small" uk-grid>
+			<div class="uk-width-auto">
+				<img class="uk-comment-avatar" src="{{comment.user.profile.image.url}}" width="60" height="60" alt="" />
+			</div>
+			<div class="uk-width-expand">
+				<h4 class="uk-comment-title uk-margin-remove">
+					<a class="uk-link-reset" href="{% url 'user_posts' comment.user.username %}">{{comment.user.username}}</a>
+				</h4>
+				<ul class="uk-comment-meta uk-subnav uk-subnav-divider uk-margin-remove-top">
+					<li>{{comment.date_posted|date:'F d, Y'}}</li>
+					<li><a href="{% url 'comment_delete' comment.blog.id comment.id %}">Delete</a></li>
+				</ul>
+			</div>
+		</header>
+		 <div class="uk-comment-body">
+			 <p>{{comment.content}}</p>
+		 </div>
+		 <hr />
+	</article>
+</li>

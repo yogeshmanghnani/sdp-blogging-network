@@ -1,9 +1,9 @@
 from django.shortcuts import render, get_object_or_404
-from .models import Blog_Post
+from .models import Blog_Post, Comment
 from users.models import User
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.http import JsonResponse, Http404
+from django.http import JsonResponse, HttpResponse, Http404
 from django.contrib.auth.decorators import login_required
 # Create your views here.
 
@@ -48,7 +48,6 @@ class UserPostListView(ListView):
 
 	def get_queryset(self):
 		user = get_object_or_404(User, username=self.kwargs.get('username'))
-		print(user)
 		return Blog_Post.objects.filter(author=user)
 
 
@@ -58,6 +57,13 @@ class PostDetailView(DetailView):
 	def get_context_data(self, **kwargs):
 		context = super().get_context_data(**kwargs)
 		context['title'] = self.object.title
+
+		#Pass Comment
+		current_post = get_object_or_404(Blog_Post, pk=self.kwargs.get('pk'))
+		comments = Comment.objects.filter(blog=current_post, reply_to__isnull=True).order_by('-date_posted')
+		context['comments'] = comments
+
+		#if like pass context
 		if self.request.user in self.object.likes.all():
 			context['liked'] = "uk-text-danger"
 		return context
@@ -92,7 +98,6 @@ class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 	def get_context_data(self, **kwargs):
 		context = super().get_context_data(**kwargs)
 		context['title'] = "Update your post"
-		context['post_create'] = 'uk-active'
 		return context
 
 
@@ -127,3 +132,28 @@ def like(request, pk):
 		return JsonResponse(response)
 	else:
 		raise Http404("Not Found")
+
+
+
+@login_required
+def comment(request, pk):
+	if request.method == 'POST':
+		blog = Blog_Post.objects.get(pk=pk)
+		com = Comment()
+		com.content = request.POST.get("content").strip()
+		com.user = request.user
+		com.blog = blog
+		if not com.content == "":
+			com.save()
+			return render(request, 'blogs/elements/comments/comment_card.html', {"comment": com})
+		else:
+			return HttpResponse()
+	else:
+		raise Http404("Not Found")
+
+
+
+
+@login_required
+def comment_delete(request, pk, comid):
+	pass
