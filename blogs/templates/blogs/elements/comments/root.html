@@ -23,8 +23,23 @@
 					comment(inid);
 				}
 			}
+			function dcomment(cid){
+				var dcomreq = new XMLHttpRequest();
+				dcomreq.open('POST', "{% url 'comment_delete' blog_id %}", true);
+				dcomreq.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+				dcomreq.setRequestHeader("X-CSRFToken", getCookie("csrftoken"));
+				dcomreq.onload = function(){
+					if(dcomreq.responseText == "deleted"){
+						document.getElementById("comment_id_"+cid).remove();
+					}
+				};
+				dcomreq.onerror = function(){
+					console.log(dcomreq.status)
+				};
+				dcomreq.send('cid='+cid);
+			}	
 		</script>
-		<form class="uk-form-horizontal" onSubmit="return false;">
+		<form onSubmit="return false;">
 			{% csrf_token %}
 			<input name="content" id="post_comment" type="text" class="uk-input uk-margin-small-bottom" placeholder="Post Comment" onkeyup="keyUpComment(event, 'post_comment')" />
 			<button type="button" class="uk-button uk-button-primary uk-align-right uk-margin-remove-bottom" onclick="comment('post_comment');" >Comment</button>
@@ -34,7 +49,7 @@
 	<div class="uk-card-body uk-padding-remove">
 		<ul class="uk-comment-list" id="comments_root">
 			{% for comment in comments %}
-				{% include './comment_card.html' with comment=comment only %}
+				{% include './comment_card.html' with comment=comment user=user only %}
 			{% endfor %}
 		</ul>
 	</div>

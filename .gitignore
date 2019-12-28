@@ -13,3 +13,4 @@ media/profile_pictures/*
 !**/migrations
 !**/migrations/__init__.py
 static/*
+.vimrc

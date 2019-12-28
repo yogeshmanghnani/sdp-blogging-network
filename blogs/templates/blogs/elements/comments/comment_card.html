@@ -1,4 +1,4 @@
-<li class="uk-margin-remove-top uk-margin-left uk-margin-right">
+<li class="uk-margin-remove-top uk-margin-left uk-margin-right" id="comment_id_{{comment.id}}">
 	<article class="uk-comment uk-padding-small">
 		<header class="uk-comment-header uk-grid-medium uk-flex-middle uk-margin-bottom-small" uk-grid>
 			<div class="uk-width-auto">
@@ -10,7 +10,11 @@
 				</h4>
 				<ul class="uk-comment-meta uk-subnav uk-subnav-divider uk-margin-remove-top">
 					<li>{{comment.date_posted|date:'F d, Y'}}</li>
-					<li><a href="{% url 'comment_delete' comment.blog.id comment.id %}">Delete</a></li>
+					{% if user == comment.user %}
+					<form onSubmit="return false;">
+						<li><button type="button" onclick="dcomment({{comment.id}});" class="uk-button uk-button-text uk-text-muted">Delete</button></li>
+					</form>
+					{% endif %}
 				</ul>
 			</div>
 		</header>

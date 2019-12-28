@@ -155,5 +155,10 @@ def comment(request, pk):
 
 
 @login_required
-def comment_delete(request, pk, comid):
-	pass
+def comment_delete(request, pk):
+	if request.method == 'POST':
+		comment = get_object_or_404(Comment, pk=request.POST.get("cid"))
+		comment.delete()
+		return HttpResponse("deleted")
+	else:
+		raise Http404("Not Found")
