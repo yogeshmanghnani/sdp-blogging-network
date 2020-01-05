@@ -1,22 +1,32 @@
+{# This is root of comments pannel #}
 <div class="uk-card uk-card-default uk-card-hover">
 	<div class="uk-card-header">
 		<h4>Comments {{ comments.count }}</h4>
 		{% if user.is_authenticated %}
 		<script type="text/javascript">
-			function comment(inid){
+			function comment(inid, reply_to){
 				var commentreq = new XMLHttpRequest();
 				commentreq.open('POST', "{% url 'post_comment' blog_id %}", true);
 				commentreq.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
 				commentreq.setRequestHeader("X-CSRFToken", getCookie("csrftoken"));
 				commentreq.onload = function(){
-					var comroot = document.getElementById("comments_root");
+					var comroot = null
+					if (reply_to) {
+						comroot = document.getElementById(inid+"_ul_"+reply_to);
+					} else {
+						comroot = document.getElementById(inid+"_ul");
+					}
 					comroot.innerHTML = commentreq.responseText + comroot.innerHTML
 					document.getElementById(inid).value = "";
 				};
 				commentreq.onerror = function(){
 					console.log(commentreq.status)
 				};
-				commentreq.send('content='+document.getElementById(inid).value);
+				if(reply_to){
+					commentreq.send('content='+document.getElementById(inid).value+"&reply="+reply_to);
+				} else {
+					commentreq.send('content='+document.getElementById(inid).value);
+				}
 			}
 			function keyUpComment(e, inid){
 				if(e.keyCode == 13){
@@ -41,13 +51,13 @@
 		</script>
 		<form onSubmit="return false;">
 			{% csrf_token %}
-			<input name="content" id="post_comment" type="text" class="uk-input uk-margin-small-bottom" placeholder="Post Comment" onkeyup="keyUpComment(event, 'post_comment')" />
-			<button type="button" class="uk-button uk-button-primary uk-align-right uk-margin-remove-bottom" onclick="comment('post_comment');" >Comment</button>
+			<input name="content" id="root_comments" type="text" class="uk-input uk-margin-small-bottom" placeholder="Post Comment" onkeyup="keyUpComment(event, 'post_comment')" />
+			<button type="button" class="uk-button uk-button-primary uk-align-right uk-margin-remove-bottom" onclick="comment('root_comments');" >Comment</button>
 		</form>
 		{% endif %}
 	</div>
 	<div class="uk-card-body uk-padding-remove">
-		<ul class="uk-comment-list" id="comments_root">
+		<ul class="uk-comment-list" id="root_comments_ul">
 			{% for comment in comments %}
 				{% include './comment_card.html' with comment=comment user=user only %}
 			{% endfor %}

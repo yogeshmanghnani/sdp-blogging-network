@@ -143,6 +143,8 @@ def comment(request, pk):
 		com.content = request.POST.get("content").strip()
 		com.user = request.user
 		com.blog = blog
+		if request.POST.get("reply"):
+			com.reply_to_id = request.POST.get("reply")
 		if not com.content == "":
 			com.save()
 			return render(request, 'blogs/elements/comments/comment_card.html', {"comment": com})

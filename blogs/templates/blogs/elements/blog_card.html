@@ -1,11 +1,17 @@
+{% load html_extras %}
 <div>
-	<div class="uk-card uk-card-hover uk-card-default">
+	<div class="uk-card uk-card-default uk-border-rounded uk-box-shadow-xlarge uk-box-shadow-hover-small">
 		<div class="uk-card-header">
 			<h3 class="uk-card-title uk-margin-remove-bottom">{{post.title}}</h3>
 			<p class="uk-margin-remove-top">{{post.date_posted|date:'F d, Y'}}
 		</div>
+		{% if post.content|get_first_image %}
+		<div class="uk-card-media-top">
+			<img src="{{post.content|get_first_image}}" />
+		</div>
+		{% endif %}
 		<div class="uk-card-body">
-			<p>{{post.content|truncatechars:140}}</p>
+			<p>{{post.content|striptags|truncatechars:140|safe}}</p>
 		</div>
 		<div class="uk-card-footer uk-padding-small">
 			<div class="uk-grid-small" uk-grid>

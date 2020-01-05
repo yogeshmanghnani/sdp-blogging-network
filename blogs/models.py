@@ -25,7 +25,7 @@ class Comment(models.Model):
 	user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 	date_posted = models.DateTimeField(default = timezone.now)
 	blog = models.ForeignKey(Blog_Post, on_delete=models.CASCADE)
-	reply_to = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True)
+	reply_to = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, related_name="replies")
 
 	def __str__(self):
 		return f'Comment by {self.user} on {self.date_posted}'

@@ -1,12 +1,12 @@
 {% extends "blogs/base.html" %}
 {% load widget_tweaks %}
 {% block content %}
-<div class="uk-width-3-4@m uk-align-center">
+<div class="uk-width-auto uk-align-center">
 	<div class="uk-card uk-card-default uk-card-body uk-margin uk-margin-top uk-card-hover">
 		<form method="POST">
 			{% csrf_token %}
 			{{ form.media }}
-			{{ form.as_p }}
+			{% include 'uikit_form_formatter/form.html' with form=form %}
 			<button class="uk-button uk-button-primary" type="submit">Post</button>	
 		</form>
 	</div>

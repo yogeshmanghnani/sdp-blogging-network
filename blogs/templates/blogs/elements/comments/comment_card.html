@@ -1,3 +1,4 @@
+{# This is a comment #}
 <li class="uk-margin-remove-top uk-margin-left uk-margin-right" id="comment_id_{{comment.id}}">
 	<article class="uk-comment uk-padding-small">
 		<header class="uk-comment-header uk-grid-medium uk-flex-middle uk-margin-bottom-small" uk-grid>
@@ -11,9 +12,10 @@
 				<ul class="uk-comment-meta uk-subnav uk-subnav-divider uk-margin-remove-top">
 					<li>{{comment.date_posted|date:'F d, Y'}}</li>
 					{% if user == comment.user %}
-					<form onSubmit="return false;">
 						<li><button type="button" onclick="dcomment({{comment.id}});" class="uk-button uk-button-text uk-text-muted">Delete</button></li>
-					</form>
+					{% endif %}
+					{% if user.is_authenticated %}
+					<li><button type="button" onclick="comment('root_comments', {{comment.id}})" class="uk-button uk-button-text uk-text-muted">Reply</button></li>
 					{% endif %}
 				</ul>
 			</div>
@@ -21,6 +23,13 @@
 		 <div class="uk-comment-body">
 			 <p>{{comment.content}}</p>
 		 </div>
-		 <hr />
 	</article>
+	<ul class="uk-margin-remove-top" id="root_comments_ul_{{comment.id}}">
+	{% if comment.replies.count > 0 %}
+		{% for com in comment.replies.all reversed %}
+			{% include 'blogs/elements/comments/comment_card.html' with user=user comment=com only %}
+		{% endfor %}
+	{% endif %}
+	</ul>
+	<hr />
 </li>
