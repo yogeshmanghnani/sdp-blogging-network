@@ -5,7 +5,7 @@ register = template.Library()
 
 @register.filter
 def get_first_image(content):
-	my_page = BeautifulSoup(content)
+	my_page = BeautifulSoup(content, features='html.parser')
 	try:
 		link = my_page.find('img').attrs['src']
 	except:

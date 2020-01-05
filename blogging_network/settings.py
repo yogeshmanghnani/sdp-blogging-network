@@ -138,6 +138,11 @@ AUTH_USER_MODEL = 'users.User'
 #CKEDITOR Settings
 CKEDITOR_UPLOAD_PATH = "blog_images/"
 CKEDITOR_ALLOW_NONIMAGE_FILES = False
+CKEDITOR_CONFIGS = {
+		'default': {
+			'width': 900,
+		},
+}
 
 FORM_RENDERER = 'django.forms.renderers.TemplatesSetting'
 
