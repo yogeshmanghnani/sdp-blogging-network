@@ -18,8 +18,20 @@
 				{% include './textinput.html' with field=field only %}
 			{% elif field|is_clearable_file %}
 				{% include './file_upload_button.html' with field=field only %}
+			{% elif field|is_select %}
+				{% include './file_upload_button.html' with field=field only %}
 			{% else %}
 				{{ field }}
+			{% endif %}
+			{% if field.errors %}
+				<ul class="uk-margin-remove">
+					{% for err in field.errors %}
+						<li class="uk-margin-remove uk-text-danger uk-text-small">{{err}}</li>
+					{% endfor %}
+				</ul>
+			{% endif %}
+			{% if field.help_text %}
+				<div class="uk-margin-remove uk-text-small uk-text-muted">{{field.help_text}}</div>
 			{% endif %}
 		</div>
 	{% endfor %}

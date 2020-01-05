@@ -1,14 +1,6 @@
 {% load widget_tweaks %}
 {% if field.errors %}
 	{% render_field field class="uk-input uk-form-danger" placeholder=field.label %} <br />
-	<ul class="uk-margin-remove">
-		{% for err in field.errors %}
-			<li class="uk-margin-remove uk-text-danger uk-text-small">{{err}}</li>
-		{% endfor %}
-	</ul>
 {% else %}
 	{% render_field field class="uk-input" placeholder=field.label %} <br />
-{% endif %}
-{% if field.help_text %}
-	<div class="uk-margin-remove uk-text-small uk-text-muted">{{field.help_text}}</div>
 {% endif %}
