@@ -19,7 +19,7 @@
 			{% elif field|is_clearable_file %}
 				{% include './file_upload_button.html' with field=field only %}
 			{% elif field|is_select %}
-				{% include './file_upload_button.html' with field=field only %}
+				{% include './select_field.html' with field=field only %}
 			{% else %}
 				{{ field }}
 			{% endif %}
