@@ -11,6 +11,7 @@ class Blog_Post(models.Model):
 	content = RichTextUploadingField()
 	date_posted = models.DateTimeField(default = timezone.now)
 	author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+	category = models.ForeignKey('blogs.Category', null=True, blank=False, related_name="blogs", on_delete=models.PROTECT)
 
 	def __str__(self):
 		return self.title
@@ -29,3 +30,9 @@ class Comment(models.Model):
 
 	def __str__(self):
 		return f'Comment by {self.user} on {self.date_posted}'
+
+
+class Category(models.Model):
+	title = models.CharField(max_length=128)
+	desc = models.CharField(max_length=2048)
+	parent = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, related_name="children")
