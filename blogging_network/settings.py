@@ -37,6 +37,7 @@ INSTALLED_APPS = [
 	'uikit_form_formatter.apps.UikitFormFormatterConfig',
 	'django_cleanup.apps.CleanupConfig',
 	'blogs.apps.BlogsConfig',
+	'complaints.apps.ComplaintsConfig',
 	'users.apps.UsersConfig',
     'django.contrib.admin',
     'django.contrib.auth',

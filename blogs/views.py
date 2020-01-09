@@ -71,7 +71,7 @@ class PostDetailView(DetailView):
 	
 class PostCreateView(LoginRequiredMixin, CreateView):
 	model = Blog_Post
-	fields = ['title', 'content', 'category']
+	fields = ['title', 'category', 'content',]
 
 	def get_context_data(self, **kwargs):
 		context = super().get_context_data(**kwargs)
