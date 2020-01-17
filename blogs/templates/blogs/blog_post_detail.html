@@ -12,7 +12,8 @@
 	<div class="uk-card uk-card-hover uk-card-default">
 		<div class="uk-card-header">
 			<h3 class="uk-card-title uk-margin-remove-bottom">{{object.title}}</h3>
-			<p class="uk-margin-remove-top">{{object.date_posted|date:'F d, Y'}}</p>
+			<p class="uk-margin-remove-top uk-margin-remove-bottom">{{object.date_posted|date:'F d, Y'}}</p>
+			<p class="uk-margin-remove-top">{% if object.category %}{{object.category}}{% else %}Uncategorized{% endif %}</p>
 		</div>
 		<div class="uk-card-body">
 			<p>{{object.content | safe }}</p>
