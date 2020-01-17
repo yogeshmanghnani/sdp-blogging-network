@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404
-from .models import Blog_Post, Comment
+from .models import Blog_Post, Comment, Category
 from users.models import User
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
@@ -49,6 +49,27 @@ class UserPostListView(ListView):
 	def get_queryset(self):
 		user = get_object_or_404(User, username=self.kwargs.get('username'))
 		return Blog_Post.objects.filter(author=user)
+
+
+class CategoryPostListView(ListView):
+	paginate_by = 12
+	model = Blog_Post
+	template_name = "blogs/category_posts.html"
+	context_object_name = "posts"
+	ordering = ['-date_posted']
+
+	def get_context_data(self, **kwargs):
+		category = get_object_or_404(Category, title=self.kwargs.get('category'))
+		context = super().get_context_data(**kwargs)
+		context['title'] = "Category :- " + category.title
+		context['category'] = category
+		return context
+
+	def get_queryset(self):
+		print(self.kwargs.get('category'))
+		category = get_object_or_404(Category, title=self.kwargs.get('category'))
+		return Blog_Post.objects.filter(category=category)
+
 
 
 class PostDetailView(DetailView):
