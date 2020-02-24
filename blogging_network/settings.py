@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+	'analytics',
 	'ckeditor',
 	'ckeditor_uploader',
 	'django.forms',
