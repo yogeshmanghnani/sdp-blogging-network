@@ -40,13 +40,13 @@ INSTALLED_APPS = [
 	'blogs.apps.BlogsConfig',
 	'complaints.apps.ComplaintsConfig',
 	'users.apps.UsersConfig',
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'widget_tweaks',
+	'django.contrib.admin',
+	'django.contrib.auth',
+	'django.contrib.contenttypes',
+	'django.contrib.sessions',
+	'django.contrib.messages',
+	'django.contrib.staticfiles',
+	'widget_tweaks',
 ]
 
 MIDDLEWARE = [
