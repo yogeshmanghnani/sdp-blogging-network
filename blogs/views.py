@@ -5,6 +5,7 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView, D
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.http import JsonResponse, HttpResponse, Http404
 from django.contrib.auth.decorators import login_required
+from analytics.mixins import ObjectViewedMixin
 # Create your views here.
 
 def home(request):
@@ -32,7 +33,7 @@ class PostListView(ListView):
 		return context
 
 
-class UserPostListView(ListView):
+class UserPostListView(ObjectViewedMixin, ListView):
 	paginate_by = 12
 	model = Blog_Post
 	template_name = "blogs/user_posts.html"
@@ -41,7 +42,7 @@ class UserPostListView(ListView):
 
 	def get_context_data(self, **kwargs):
 		author = get_object_or_404(User, username=self.kwargs.get('username'))
-		context = super().get_context_data(**kwargs)
+		context = super().get_context_data(object_viewed=author, **kwargs)
 		context['title'] = "Blog Posts by " + author.username
 		context['author'] = author
 		return context
@@ -60,7 +61,7 @@ class CategoryPostListView(ListView):
 
 	def get_context_data(self, **kwargs):
 		category = get_object_or_404(Category, title=self.kwargs.get('category'))
-		context = super().get_context_data(**kwargs)
+		context = super().get_context_data(object_viewed = category, **kwargs)
 		context['title'] = "Category :- " + category.title
 		context['category'] = category
 		return context
@@ -72,13 +73,12 @@ class CategoryPostListView(ListView):
 
 
 
-class PostDetailView(DetailView):
+class PostDetailView(ObjectViewedMixin, DetailView):
 	model = Blog_Post
 
 	def get_context_data(self, **kwargs):
 		context = super().get_context_data(**kwargs)
 		context['title'] = self.object.title
-
 		#Pass Comment
 		current_post = get_object_or_404(Blog_Post, pk=self.kwargs.get('pk'))
 		comments = Comment.objects.filter(blog=current_post, reply_to__isnull=True).order_by('-date_posted')

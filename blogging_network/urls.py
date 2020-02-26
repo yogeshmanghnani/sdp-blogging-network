@@ -48,3 +48,7 @@ urlpatterns = [
 if settings.DEBUG:
 	urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 	urlpatterns += [re_path(r'^static/(?P<path>.*)$', static_views.serve),]
+
+admin.site.site_header = "Blogging Network Admin"
+admin.site.site_title = "Blogging Network Admin Portal"
+admin.site.index_title = "Welcome to admin side"
