@@ -3,6 +3,8 @@ from django.utils import timezone
 from django.conf import settings
 from django.urls import reverse
 from ckeditor_uploader.fields import RichTextUploadingField
+from analytics.models import ObjectViewed
+from django.contrib.contenttypes.fields import GenericRelation
 # Create your models here.
 
 class Blog_Post(models.Model):
@@ -12,6 +14,7 @@ class Blog_Post(models.Model):
 	date_posted = models.DateTimeField(default = timezone.now)
 	author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 	category = models.ForeignKey('blogs.Category', null=True, blank=True, related_name="blogs", on_delete=models.PROTECT)
+	views = GenericRelation(ObjectViewed, content_type_field = 'content_type', object_id_field = 'object_id')
 
 	def __str__(self):
 		return self.title

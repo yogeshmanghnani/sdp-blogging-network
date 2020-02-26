@@ -14,3 +14,4 @@ media/profile_pictures/*
 !**/migrations/__init__.py
 static/*
 .vimrc
+db.sqlite3
