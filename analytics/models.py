@@ -34,3 +34,25 @@ def object_viewed_receiver(sender, instance, request, *args, **kwargs):
 			object_id = instance.id
 			)
 object_viewed_signal.connect(object_viewed_receiver)
+
+
+
+
+#PROXY Models
+class BlogViewedManager(models.Manager):
+	def get_queryset(self):
+		return super().get_queryset().distinct()
+
+
+from blogs.models import Blog_Post
+class BlogViewed(Blog_Post):
+
+	objects = BlogViewedManager()
+
+	def number_of_views(self):
+		return self.views.count()
+
+	class Meta:
+		proxy = True
+		verbose_name = "Blog Viewed"
+		verbose_name_plural = "Blogs Viewed"

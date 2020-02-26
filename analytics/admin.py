@@ -1,7 +1,6 @@
 from django.shortcuts import redirect, reverse
 from django.contrib import admin
-#from django.core.urlresolvers import reverse
-from .models import ObjectViewed
+from .models import ObjectViewed, BlogViewed
 
 class ObjectViewedAdmin(admin.ModelAdmin):
 	list_display = ('user', 'content_object', 'timestamp', 'ip_addr')
@@ -16,4 +15,12 @@ class ObjectViewedAdmin(admin.ModelAdmin):
 		url = reverse('admin:{app}_{model}_changelist'.format(app=opts.app_label,model=opts.model_name,))	
 		return redirect(url) 
 
+
+
+class BlogViewedAdmin(admin.ModelAdmin):
+	list_display = ('title', 'author', 'date_posted', 'number_of_views')
+
+
+
 admin.site.register(ObjectViewed, ObjectViewedAdmin)
+admin.site.register(BlogViewed, BlogViewedAdmin)
