@@ -27,8 +27,12 @@ class ObjectViewed(models.Model):
 
 def object_viewed_receiver(sender, instance, request, *args, **kwargs):
 	ctype = ContentType.objects.get_for_model(sender)
+	if request.user.is_anonymous :
+		user = None
+	else:
+		user = request.user
 	new_view = ObjectViewed.objects.create(
-			user = request.user,
+			user = user,
 			ip_addr = get_client_ip(request),
 			content_type = ctype,
 			object_id = instance.id
@@ -41,16 +45,14 @@ object_viewed_signal.connect(object_viewed_receiver)
 #PROXY Models
 class BlogViewedManager(models.Manager):
 	def get_queryset(self):
-		return super().get_queryset().distinct()
+		return super().get_queryset().distinct().annotate(num_views=models.Count('views'))
+
 
 
 from blogs.models import Blog_Post
 class BlogViewed(Blog_Post):
 
 	objects = BlogViewedManager()
-
-	def number_of_views(self):
-		return self.views.count()
 
 	class Meta:
 		proxy = True
