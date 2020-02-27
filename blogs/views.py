@@ -38,7 +38,6 @@ class UserPostListView(ObjectViewedMixin, ListView):
 	model = Blog_Post
 	template_name = "blogs/user_posts.html"
 	context_object_name = "posts"
-	ordering = ['-date_posted']
 
 	def get_context_data(self, **kwargs):
 		author = get_object_or_404(User, username=self.kwargs.get('username'))
@@ -49,7 +48,7 @@ class UserPostListView(ObjectViewedMixin, ListView):
 
 	def get_queryset(self):
 		user = get_object_or_404(User, username=self.kwargs.get('username'))
-		return Blog_Post.objects.filter(author=user)
+		return Blog_Post.objects.filter(author=user).order_by('-date_posted')
 
 
 class CategoryPostListView(ListView):
@@ -67,7 +66,6 @@ class CategoryPostListView(ListView):
 		return context
 
 	def get_queryset(self):
-		print(self.kwargs.get('category'))
 		category = get_object_or_404(Category, title=self.kwargs.get('category'))
 		return Blog_Post.objects.filter(category=category)
 

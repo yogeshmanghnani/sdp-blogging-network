@@ -2,6 +2,7 @@ from .signals import object_viewed_signal
 
 class ObjectViewedMixin(object):
 	def get_context_data(self, **kwargs):
+		print(self.request)
 		context = super().get_context_data(**kwargs)
 		request = self.request
 		instance = context.get('object')
