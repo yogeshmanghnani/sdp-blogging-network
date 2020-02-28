@@ -45,7 +45,7 @@ object_viewed_signal.connect(object_viewed_receiver)
 #PROXY Models
 class BlogViewedManager(models.Manager):
 	def get_queryset(self):
-		return super().get_queryset().distinct().annotate(num_views=models.Count('views'))
+		return super().get_queryset().distinct()
 
 
 
@@ -58,3 +58,15 @@ class BlogViewed(Blog_Post):
 		proxy = True
 		verbose_name = "Blog Viewed"
 		verbose_name_plural = "Blogs Viewed"
+
+
+
+
+## Second Proxy model User
+from users.models import User
+class UserViewed(User):
+	class Meta:
+		proxy = True
+		verbose_name = "User Blog Viewed"
+		verbose_name_plural = "User Blogs Viewed"
+

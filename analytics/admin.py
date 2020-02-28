@@ -1,10 +1,11 @@
 from django.shortcuts import redirect, reverse
 from django.db import models
 from django.contrib import admin
-from .models import ObjectViewed, BlogViewed
+from .models import ObjectViewed, BlogViewed, UserViewed
 
 
 class ViewOnlyAdmin(admin.ModelAdmin):
+	list_display_links = None
 	def has_add_permission(self, request):
 		return False
 
@@ -47,6 +48,31 @@ class BlogViewedAdmin(ViewOnlyAdmin):
 	number_of_likes.admin_order_field = '_like_count'
 
 
+class UserViewedAdmin(ViewOnlyAdmin):
+	list_display = ('username', 'number_of_reads', 'number_of_likes', 'number_of_comments')
+	search_fields = ['username']
+	def get_queryset(self, request):
+		qs = super().get_queryset(request)
+		qs = qs.annotate(_view_count = models.Count("blog_post__views"), _like_count = models.Count("blog_post__likes"), _comment_count = models.Count("blog_post__comments"))
+		return qs
 
+	def number_of_reads(self, obj):
+		return obj._view_count
+
+	def number_of_likes(self, obj):
+		return obj._like_count
+
+	def number_of_comments(self, obj):
+		return obj._comment_count
+
+	number_of_reads.admin_order_field = '_view_count'
+	number_of_likes.admin_order_field = '_like_count'
+	number_of_comments.admin_order_field = '_comment_count'
+
+
+
+
+
+admin.site.register(UserViewed, UserViewedAdmin)
 admin.site.register(ObjectViewed, ObjectViewedAdmin)
 admin.site.register(BlogViewed, BlogViewedAdmin)
