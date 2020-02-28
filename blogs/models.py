@@ -28,7 +28,7 @@ class Comment(models.Model):
 	content = models.CharField(max_length=512)
 	user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 	date_posted = models.DateTimeField(default = timezone.now)
-	blog = models.ForeignKey(Blog_Post, on_delete=models.CASCADE)
+	blog = models.ForeignKey(Blog_Post, on_delete=models.CASCADE, related_name='comments')
 	reply_to = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, related_name="replies")
 
 	def __str__(self):
