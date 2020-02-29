@@ -9,11 +9,16 @@
 	<span id="numLike">{{object.likes.count}}</span>
 </div>
 <div>
-	<div class="uk-card uk-card-hover uk-card-default">
+	<div class="uk-card uk-card-hover uk-card-default bn-round-corner">
 		<div class="uk-card-header">
 			<h3 class="uk-card-title uk-margin-remove-bottom">{{object.title}}</h3>
 			<p class="uk-margin-remove-top uk-margin-remove-bottom">{{object.date_posted|date:'F d, Y'}}</p>
-			<p class="uk-margin-remove-top">{% if object.category %}{{object.category}}{% else %}Uncategorized{% endif %}</p>
+			{% if object.category %}
+			<p class="uk-margin-remove-top"><a class="uk-text-muted" href="{% url 'cat_posts' object.category %}">{{object.category}}</a></p>
+			{% else %}
+			<p class="uk-margin-remove-top"><a href="#" class="uk-text-muted">Uncategorized</a></p>
+			{% endif %}
+
 		</div>
 		<div class="uk-card-body">
 			<p>{{object.content | safe }}</p>
