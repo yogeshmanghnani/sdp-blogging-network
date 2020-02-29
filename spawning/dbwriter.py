@@ -1,4 +1,4 @@
-import dbreader
+from . import dbreader
 from users.models import User
 from blogs.models import Blog_Post
 
