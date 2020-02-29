@@ -1,6 +1,6 @@
 {% extends "blogs/base.html" %}
 {% block content %}
-<div class="uk-card uk-card-default uk-card-hover uk-card-body uk-width-2-3@m uk-align-center" style="border-radius:30px">
+<div class="uk-card uk-card-default uk-card-hover uk-card-body uk-width-2-3@m uk-align-center bn-round-corner">
 	<form method="POST">
 		{% csrf_token %}
 		{% include 'uikit_form_formatter/form.html' with form=form legend="Submit your complaint" %}
