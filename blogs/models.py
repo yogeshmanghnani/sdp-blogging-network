@@ -8,7 +8,7 @@ from django.contrib.contenttypes.fields import GenericRelation
 # Create your models here.
 
 class Blog_Post(models.Model):
-	title = models.CharField(max_length=64)
+	title = models.CharField(max_length=1024)
 	likes = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="liked_blogs")
 	content = RichTextUploadingField()
 	date_posted = models.DateTimeField(default = timezone.now)
@@ -36,7 +36,7 @@ class Comment(models.Model):
 
 
 class Category(models.Model):
-	title = models.CharField(max_length=128)
+	title = models.CharField(max_length=128, unique=True)
 	desc = models.CharField(max_length=2048)
 	parent = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, related_name="children")
 
