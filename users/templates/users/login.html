@@ -2,17 +2,17 @@
 {% load widget_tweaks %}
 {% block content %}
 <div class="uk-width-1-2@m uk-align-right@m">
-	<div class="uk-card uk-card-default uk-card-body uk-margin uk-margin-top uk-card-hover" style="border-radius:30px;">
+	<div class="uk-card uk-card-default uk-card-body uk-margin uk-margin-top uk-card-hover bn-round-corner">
 		<form method="POST">
 			{% csrf_token %}
 			{% include 'uikit_form_formatter/form.html' with legend="Login" form=form %}
 			<button class="uk-button uk-button-primary" type="submit">Login</button>	
 		</form>
 	</div>
-	<div class="uk-card uk-card-default uk-card-body uk-card-hover uk-margin-bottom" style="border-radius:30px;">	
+	<div class="uk-card uk-card-default uk-card-body uk-card-hover uk-margin-bottom bn-round-corner">	
 		Don't have an account? <a href="{% url 'register' %}">Sign Up</a>
 	</div>
-	<div class="uk-card uk-card-default uk-card-body uk-card-hover" style="border-radius:30px;">	
+	<div class="uk-card uk-card-default uk-card-body uk-card-hover bn-round-corner">	
 		Forgot Password? <a href="{% url 'password_reset' %}">Reset Here</a>
 	</div>
 </div>
