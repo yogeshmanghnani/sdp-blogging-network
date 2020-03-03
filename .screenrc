@@ -1,6 +1,0 @@
-source ~/.screenrc
-focus
-focus
-stuff "python manage.py runserver"
-focus
-stuff "vim"
