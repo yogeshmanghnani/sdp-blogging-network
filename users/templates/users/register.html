@@ -1,17 +1,23 @@
 {% extends "blogs/base.html" %}
 {% load widget_tweaks %}
 {% load widget_filters %}
+{% load static %}
 {% block content %}
-<div class="uk-width-1-2@m uk-align-right@m">
-	<div class="uk-card uk-card-default uk-card-body uk-margin uk-margin-top uk-card-hover bn-round-corner">
-		<form method="POST">
-			{% csrf_token %}
-			{% include 'uikit_form_formatter/form.html' with legend="Sign Up" form=form only %}
-			<button class="uk-button uk-button-primary" type="submit">Sign Up</button>	
-		</form>
+<div class="uk-child-width-1-2@m uk-grid uk-vertical-align-middle" uk-grid>
+	<div>
+		<img src="{% static 'users/reg_bg.png' %}" class="uk-responsive-height bn-aspect-ratio" />
 	</div>
-	<div class="uk-card uk-card-default uk-card-body uk-card-hover bn-round-corner">	
-		Already have an account? <a href="{% url 'login' %}">Login</a>
+	<div>
+		<div class="uk-card uk-card-default uk-card-body uk-margin uk-margin-top uk-card-hover bn-round-corner">
+			<form method="POST">
+				{% csrf_token %}
+				{% include 'uikit_form_formatter/form.html' with legend="Sign Up" form=form only %}
+				<button class="uk-button uk-button-primary" type="submit">Sign Up</button>	
+			</form>
+		</div>
+		<div class="uk-card uk-card-default uk-card-body uk-card-hover bn-round-corner">	
+			Already have an account? <a href="{% url 'login' %}">Login</a>
+		</div>
 	</div>
 </div>
 {% endblock content %}
