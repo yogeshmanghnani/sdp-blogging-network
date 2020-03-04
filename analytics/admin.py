@@ -1,3 +1,5 @@
+import json
+from django.core.serializers.json import DjangoJSONEncoder
 from django.shortcuts import redirect, reverse
 from django.db import models
 from django.contrib import admin
@@ -43,6 +45,20 @@ class BlogViewedAdmin(ViewOnlyAdmin):
 
 	def number_of_likes(self, obj):
 		return obj._like_count
+
+	def changelist_view(self, request, extra_context=None):
+		cdata = self.chart_data()
+		as_json = json.dumps(cdata, cls = DjangoJSONEncoder)
+		extra_context = extra_context or {"chart_data": as_json}
+		view = super().changelist_view(request, extra_context)
+		return view
+	
+	def chart_data(self):
+		return BlogViewed.objects.distinct().aggregate(
+			_view_count = models.Count("views", distinct=True),
+			_like_count = models.Count("likes", distinct=True),
+		)
+		
 
 	number_of_views.admin_order_field = '_view_count'
 	number_of_likes.admin_order_field = '_like_count'
