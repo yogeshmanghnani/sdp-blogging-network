@@ -47,18 +47,28 @@ class BlogViewedAdmin(ViewOnlyAdmin):
 		return obj._like_count
 
 	def changelist_view(self, request, extra_context=None):
-		cdata = self.chart_data()
-		as_json = json.dumps(cdata, cls = DjangoJSONEncoder)
-		extra_context = extra_context or {"chart_data": as_json}
+		cdata = self.chart_data(request)
+		view_like_json = json.dumps(cdata[0], cls = DjangoJSONEncoder)
+		usershare_json = json.dumps(list(cdata[1]), cls = DjangoJSONEncoder)
+		context_to_send = {"view_like_data": view_like_json, "usershare_data": usershare_json}
+		extra_context = extra_context or context_to_send 
 		view = super().changelist_view(request, extra_context)
 		return view
 	
-	def chart_data(self):
-		return BlogViewed.objects.distinct().aggregate(
-			_view_count = models.Count("views", distinct=True),
-			_like_count = models.Count("likes", distinct=True),
+	def chart_data(self, request):
+		qs = self.get_changelist_instance(request).queryset
+		view_like_data = qs.aggregate(
+			_view_count = models.Count("views"),
 		)
-		
+		view_like_data.update(qs.aggregate(
+			_like_count = models.Count("likes"),
+			_comment_count = models.Count("comments"),
+		))
+
+		usershare = qs.order_by().values("author__username").annotate(
+			view_count = models.Count("author__blog_post__views", distinct = True)
+		)
+		return view_like_data, usershare
 
 	number_of_views.admin_order_field = '_view_count'
 	number_of_likes.admin_order_field = '_like_count'
@@ -69,7 +79,7 @@ class UserViewedAdmin(ViewOnlyAdmin):
 	search_fields = ['username']
 	def get_queryset(self, request):
 		qs = super().get_queryset(request)
-		qs = qs.annotate(_view_count = models.Count("blog_post__views"), _like_count = models.Count("blog_post__likes"), _comment_count = models.Count("blog_post__comments"))
+		qs = qs.distinct().filter(blog_post__views__isnull = False).annotate(_view_count = models.Count("blog_post__views", distinct=True), _like_count = models.Count("blog_post__likes", distinct=True), _comment_count = models.Count("blog_post__comments", distinct=True))
 		return qs
 
 	def number_of_reads(self, obj):
