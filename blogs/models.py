@@ -16,6 +16,9 @@ class Blog_Post(models.Model):
 	category = models.ForeignKey('blogs.Category', null=True, blank=True, related_name="blogs", on_delete=models.PROTECT)
 	views = GenericRelation(ObjectViewed, content_type_field = 'content_type', object_id_field = 'object_id')
 
+	def recommend(self):
+		return Blog_Post.objects.all()[:4]
+
 	def __str__(self):
 		return self.title
 
