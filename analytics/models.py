@@ -70,3 +70,10 @@ class UserViewed(User):
 		verbose_name = "User Blog Viewed"
 		verbose_name_plural = "User Blogs Viewed"
 
+
+from users.models import LoginLogs
+class UserLoggedInLog(LoginLogs):
+	class Meta:
+		proxy = True
+		verbose_name = "Login Log"
+		verbose_name_plural = "Login Logs"

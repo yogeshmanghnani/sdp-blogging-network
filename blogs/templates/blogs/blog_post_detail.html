@@ -44,6 +44,7 @@
 	<div class="uk-width-auto uk-align-center">
 	{% include './elements/comments/root.html' with comments=comments blog_id=object.id user=user csrf_token=csrf_token only %}
 	</div>
+	{% include "blogs/home.html" %}
 </div>
 <script type="text/javascript">
 

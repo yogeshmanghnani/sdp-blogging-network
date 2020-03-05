@@ -3,7 +3,8 @@ from django.core.serializers.json import DjangoJSONEncoder
 from django.shortcuts import redirect, reverse
 from django.db import models
 from django.contrib import admin
-from .models import ObjectViewed, BlogViewed, UserViewed
+from .models import ObjectViewed, BlogViewed, UserViewed, UserLoggedInLog
+from users.models import LoginLogs
 
 
 class ViewOnlyAdmin(admin.ModelAdmin):
@@ -96,9 +97,32 @@ class UserViewedAdmin(ViewOnlyAdmin):
 	number_of_comments.admin_order_field = '_comment_count'
 
 
+class UserLoggedInLogAdmin(ViewOnlyAdmin):
+
+
+	def changelist_view(self, request, extra_context=None):
+		cdata = self.chart_data(request)
+		login_logs_json = json.dumps(list(cdata[0]), cls = DjangoJSONEncoder)
+		new_context = {"user_login_logs": login_logs_json}
+		extra_context = extra_context or new_context
+		print(extra_context)
+		return super().changelist_view(request, extra_context)
+
+	def chart_data(self, request):
+		qs = self.get_changelist_instance(request).queryset[:]
+		qs = qs.order_by()
+		qs = qs.extra({'login_date': 'date(login_time)'}).values('login_date').annotate(_logins = models.Count('id'))
+		return (qs[:],)
 
 
 
+	list_display = ('user','login_time')
+	search_fields = ('user__username',)
+	date_hierarchy = 'login_time'
+
+
+
+admin.site.register(UserLoggedInLog, UserLoggedInLogAdmin)
 admin.site.register(UserViewed, UserViewedAdmin)
 admin.site.register(ObjectViewed, ObjectViewedAdmin)
 admin.site.register(BlogViewed, BlogViewedAdmin)

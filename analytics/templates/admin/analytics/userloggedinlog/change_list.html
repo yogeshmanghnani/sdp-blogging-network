@@ -11,50 +11,19 @@
 {% block content %}
 <div style="display:inline-block;margin-bottom:18px;">
 <div style="height:300px;">
-	<canvas id="view_like"> </canvas>
-	<script>
-		var cont_data = {{ view_like_data | safe }};
-		var ctx = document.getElementById('view_like');
-		var view_like_chart = new Chart(ctx,
-			{
-				type: 'pie',
-				data: {
-					labels: ['Number of view', 'Number of like', "Number of comments"],
-					datasets: [{
-						data: [cont_data._view_count, cont_data._like_count, cont_data._comment_count],
-						backgroundColor: ["#407899", "#DE6449", "#791E94"],
-					}],
-				},
-				options: {
-					title: {
-						display: true,
-						text: "View to like ratio",
-					},
-					responsive: true,
-					maintainAspectRatio: false,
-				}
-			}
-		);
-		view_like_chart.render();
-		
-	</script>
-</div>
-</div>
-<div style="display:inline-block;margin-bottom:18px;">
-<div style="height:300px;">
 	<canvas id="usershare_canvas"> </canvas>
 	<script>
-		var cont_data = {{ usershare_data | safe }};
+		var cont_data = {{ user_login_logs | safe }};
 		var ctx = document.getElementById('usershare_canvas');
 		var labels = []
 		var data = []
 		cont_data.forEach(function (item, index){
-			labels.push(item.author__username);
-			data.push(item.view_count);
+			labels.push(item.login_date);
+			data.push(item._logins);
 		});
 		var view_like_chart = new Chart(ctx,
 			{
-				type: 'pie',
+				type: 'bar',
 				data: {
 					labels: labels,
 					datasets: [{
@@ -63,12 +32,22 @@
 					}],
 				},
 				options: {
+					legend: {
+						display: false
+					},
 					title: {
 						display: true,
-						text: "User View Share",
+						text: "Login by date",
 					},
 					responsive: true,
 					maintainAspectRatio: false,
+					scales: {
+						yAxes: [{
+							ticks: {
+								beginAtZero: true,
+							}
+						}]
+					},
 				}
 			}
 		);
