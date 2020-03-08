@@ -105,7 +105,6 @@ class UserLoggedInLogAdmin(ViewOnlyAdmin):
 		login_logs_json = json.dumps(list(cdata[0]), cls = DjangoJSONEncoder)
 		new_context = {"user_login_logs": login_logs_json}
 		extra_context = extra_context or new_context
-		print(extra_context)
 		return super().changelist_view(request, extra_context)
 
 	def chart_data(self, request):

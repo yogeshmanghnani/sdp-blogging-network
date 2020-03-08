@@ -7,7 +7,6 @@ from .models import Profile, LoginLogs
 @receiver(post_save, sender=get_user_model())
 def create_profile(sender, instance, created, **kwargs):
 	if created:
-		print("created")
 		Profile.objects.create(user=instance)
 
 
