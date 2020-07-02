@@ -31,22 +31,22 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-	'analytics',
-	'ckeditor',
-	'ckeditor_uploader',
-	'django.forms',
-	'uikit_form_formatter.apps.UikitFormFormatterConfig',
-	'django_cleanup.apps.CleanupConfig',
-	'blogs.apps.BlogsConfig',
-	'complaints.apps.ComplaintsConfig',
-	'users.apps.UsersConfig',
-	'django.contrib.admin',
-	'django.contrib.auth',
-	'django.contrib.contenttypes',
-	'django.contrib.sessions',
-	'django.contrib.messages',
-	'django.contrib.staticfiles',
-	'widget_tweaks',
+        'analytics',
+        'ckeditor',
+        'ckeditor_uploader',
+        'django.forms',
+        'uikit_form_formatter.apps.UikitFormFormatterConfig',
+        'django_cleanup.apps.CleanupConfig',
+        'blogs.apps.BlogsConfig',
+        'complaints.apps.ComplaintsConfig',
+        'users.apps.UsersConfig',
+        'django.contrib.admin',
+        'django.contrib.auth',
+        'django.contrib.contenttypes',
+        'django.contrib.sessions',
+        'django.contrib.messages',
+        'django.contrib.staticfiles',
+        'widget_tweaks',
 ]
 
 MIDDLEWARE = [
@@ -141,9 +141,9 @@ AUTH_USER_MODEL = 'users.User'
 CKEDITOR_UPLOAD_PATH = "blog_images/"
 CKEDITOR_ALLOW_NONIMAGE_FILES = False
 CKEDITOR_CONFIGS = {
-		'default': {
-			'width': 900,
-		},
+                'default': {
+                        'width': 900,
+                },
 }
 
 FORM_RENDERER = 'django.forms.renderers.TemplatesSetting'

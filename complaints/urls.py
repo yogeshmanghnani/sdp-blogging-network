@@ -20,7 +20,7 @@ from . import views as com_views
 
 
 urlpatterns = [
-		path('create/', com_views.ComplaintCreateView.as_view(), name='create_complaint'),
-		path('done/', com_views.complaint_done, name="complaint_done")
+                path('create/', com_views.ComplaintCreateView.as_view(), name='create_complaint'),
+                path('done/', com_views.complaint_done, name="complaint_done")
 ]
 

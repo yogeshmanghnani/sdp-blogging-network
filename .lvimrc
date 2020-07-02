@@ -1,0 +1,6 @@
+set path=**
+set wildmenu
+set ls=2
+set ruler
+set wildmenu
+set wildignore=*.pyc

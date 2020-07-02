@@ -23,31 +23,31 @@ from django.conf.urls.static import static
 
 
 urlpatterns = [
-		path('ckeditor/', include('ckeditor_uploader.urls')),
-		path('', include('blogs.urls')),
-		path('complaints/', include('complaints.urls')),
-		path('admin/', admin.site.urls),
-		path('register/', user_views.register, name="register"),
-		path('login/', auth_views.LoginView.as_view(template_name="users/login.html", redirect_authenticated_user=True), name="login"),
-		path('password_reset/', 
-			auth_views.PasswordResetView.as_view(template_name="users/password_reset.html"),
-			name="password_reset"),
-		path('password_reset_complete/', 
-			auth_views.PasswordResetCompleteView.as_view(template_name="users/password_reset_complete.html"),
-			name="password_reset_complete"),
-		path('password_reset/done/', 
-			auth_views.PasswordResetDoneView.as_view(template_name="users/password_reset_done.html"),
-			name="password_reset_done"),
-		path('password_reset_confirm/<uidb64>/<token>', 
-			auth_views.PasswordResetConfirmView.as_view(template_name="users/password_reset_confirm.html"),
-			name="password_reset_confirm"),
-		path('logout/', auth_views.LogoutView.as_view(template_name="users/logout.html"), name="logout"),
-		path('profile/', user_views.profile, name="profile"),
+                path('ckeditor/', include('ckeditor_uploader.urls')),
+                path('', include('blogs.urls')),
+                path('complaints/', include('complaints.urls')),
+                path('admin/', admin.site.urls),
+                path('register/', user_views.register, name="register"),
+                path('login/', auth_views.LoginView.as_view(template_name="users/login.html", redirect_authenticated_user=True), name="login"),
+                path('password_reset/', 
+                        auth_views.PasswordResetView.as_view(template_name="users/password_reset.html"),
+                        name="password_reset"),
+                path('password_reset_complete/', 
+                        auth_views.PasswordResetCompleteView.as_view(template_name="users/password_reset_complete.html"),
+                        name="password_reset_complete"),
+                path('password_reset/done/', 
+                        auth_views.PasswordResetDoneView.as_view(template_name="users/password_reset_done.html"),
+                        name="password_reset_done"),
+                path('password_reset_confirm/<uidb64>/<token>', 
+                        auth_views.PasswordResetConfirmView.as_view(template_name="users/password_reset_confirm.html"),
+                        name="password_reset_confirm"),
+                path('logout/', auth_views.LogoutView.as_view(template_name="users/logout.html"), name="logout"),
+                path('profile/', user_views.profile, name="profile"),
 ]
 
 if settings.DEBUG:
-	urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-	urlpatterns += [re_path(r'^static/(?P<path>.*)$', static_views.serve),]
+        urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+        urlpatterns += [re_path(r'^static/(?P<path>.*)$', static_views.serve),]
 
 admin.site.site_header = "Blogging Network Admin"
 admin.site.site_title = "Blogging Network Admin Portal"
