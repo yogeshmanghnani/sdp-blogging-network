@@ -10,6 +10,7 @@ class User(AbstractUser):
 class Profile(models.Model):
 	user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 	image = models.ImageField(upload_to='profile_pictures/', default='profile_pictures/default.jpg')
+	following = models.ManyToManyField('self', related_name='followers', symmetrical=False)
 
 	def __str__(self):
 		return f'{self.user.username} Profile'
