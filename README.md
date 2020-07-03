@@ -19,3 +19,23 @@ You can overide this by creating local_settings.py
 
 # TODO
 Write a good README
+
+## vim settings
+### python
+```
+set ts=4
+set sw=4
+set sts=4
+set noexpandtab
+set list
+set listchars=tab:>-
+```
+### htmldjango
+```
+set noet
+set ts=2
+set sw=2
+set sts=2
+set nolist
+set listchars=""
+```
