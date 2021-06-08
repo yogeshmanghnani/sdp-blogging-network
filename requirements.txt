@@ -23,7 +23,7 @@ mccabe==0.6.1
 more-itertools==8.0.2
 openpyxl==3.0.4
 packaging==19.2
-Pillow==6.2.2
+Pillow==8.2.0
 pip-autoremove==0.9.1
 pluggy==0.13.1
 psycopg2==2.8.5
